@@ -1,0 +1,79 @@
+/* stylelint-disable-next-line scss/dollar-variable-colon-space-after */
+
+/**
+ * 水波纹动画过渡效果配置
+ * 定义水波纹进入时的形变和透明度变化曲线
+ */
+$ripple-animation-transition-in:
+  transform 0.4s cubic-bezier(0, 0, 0.2, 1),
+  opacity 0.2s cubic-bezier(0, 0, 0.2, 1) !default;
+
+/**
+ * 水波纹消失动画过渡配置
+ * 定义水波纹淡出时的透明度变化曲线
+ */
+$ripple-animation-transition-out: opacity 0.5s cubic-bezier(0, 0, 0.2, 1) !default;
+
+/**
+ * 水波纹可见状态的最大透明度
+ */
+$ripple-animation-visible-opacity: 0.25 !default;
+
+.v-ripple {
+  /**
+   * 水波纹容器样式
+   * 使用绝对定位覆盖整个父元素，作为水波纹动画的裁剪区域
+   */
+  &__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+    contain: strict;
+  }
+
+  /**
+   * 水波纹动画元素基础样式
+   * 圆形扩散效果的核心实现，通过改变透明度和缩放实现视觉反馈
+   */
+  &__animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: currentcolor;
+    border-radius: 50%;
+    opacity: 0;
+    will-change: transform, opacity;
+
+    /**
+     * 初始状态：完全透明且无过渡动画
+     */
+    &--enter {
+      opacity: 0;
+      transition: none;
+    }
+
+    /**
+     * 扩散状态：逐渐显示并放大
+     */
+    &--in {
+      opacity: $ripple-animation-visible-opacity;
+      transition: $ripple-animation-transition-in;
+    }
+
+    /**
+     * 消失状态：逐渐淡出
+     */
+    &--out {
+      opacity: 0;
+      transition: $ripple-animation-transition-out;
+    }
+  }
+}

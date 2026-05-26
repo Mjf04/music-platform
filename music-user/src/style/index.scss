@@ -1,0 +1,9 @@
+/**
+ * 全局样式入口文件
+ *
+ * 按顺序引入 Tailwind 基础样式、自定义基础配置、字体定义以及 Element Plus 主题定制
+ */
+@use './tailwind.css';
+@use './base.scss';
+@use './fonts.css';
+@use './element-plus.css';
